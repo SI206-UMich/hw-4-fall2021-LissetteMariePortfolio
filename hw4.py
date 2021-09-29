@@ -59,11 +59,12 @@ class Cashier:
     # Receives payment from customer, and adds the money to the stall's earnings.
     def receive_payment(self, stall, money):
         stall.earnings += money
-
+        # Testing validation, check earnings, look up default cashier money
     # Places an order at the stall.
         # The cashier pays the stall the cost.
         # The stall processes the order
         # Function returns cost of the order, using compute_cost method
+
     def place_order(self, stall, item, quantity):
         stall.process_order(item, quantity)
         return stall.compute_cost(quantity)
@@ -95,8 +96,8 @@ class Stall:
     def process_order(self, food_name, quantity):
         if has_item(name, quantity):
             self.inventory[food_name] -= quantity
-        print("Your order has been processed!")    
-        
+        print("Your order has been processed!")
+
         return order_cost
     # Adds a stall to the directory of the cashier.
 
@@ -124,9 +125,11 @@ class TestAllMethods(unittest.TestCase):
         inventory = {"Burger": 40, "Taco": 50}
         self.f1 = Customer("Ted")
         self.f2 = Customer("Morgan", 150)
+        self.f3 = Customer("Brad")
         self.s1 = Stall("The Grill Queen", inventory, cost=10)
         self.s2 = Stall("Tamale Train", inventory, cost=9)
         self.s3 = Stall("The Streatery", inventory)
+        self.s7 = Stall("The Cookies Stall", inventory)
         self.c1 = Cashier("West")
         self.c2 = Cashier("East")
         # the following codes show that the two cashiers have the same directory
@@ -190,8 +193,8 @@ class TestAllMethods(unittest.TestCase):
     def test_compute_cost(self):
         # what's wrong with the following statements?
         # can you correct them?
-        self.assertEqual(self.s1.compute_cost(self.s1, 5), 51)
-        self.assertEqual(self.s3.compute_cost(self.s3, 6), 45)
+        self.assertEqual(self.s1.compute_cost(self.s1, 5), 50)
+        self.assertEqual(self.s3.compute_cost(self.s3, 6), 42)
 
         # Check that the stall can properly see when it is empty
     def test_has_item(self):
@@ -200,24 +203,37 @@ class TestAllMethods(unittest.TestCase):
         # Test to see if has_item returns True when a stall has enough items left
         # Please follow the instructions below to create three different kinds of test cases
         # Test case 1: the stall does not have this food item:
+        self.assertFalse(self.s1.has_item("Pizza", 50))
+        self.assertFalse(self.s1.has_item("Pizza", 2))
 
         # Test case 2: the stall does not have enough food item:
-
+        self.assertFalse(self.s1.has_item("Taco", 52))
+        self.assertFalse(self.s2.has_item("Burger", 42))
         # Test case 3: the stall has the food item of the certain quantity:
-        pass
+        self.assertTrue(self.s2.has_item("Taco", 2))
+        self.assertTrue(self.s2.has_item("Burger", 2))
 
         # Test validate order
     def test_validate_order(self):
         # case 1: test if a customer doesn't have enough money in their wallet to order
+        self.f1.validate_order(c1, s1, "Burger", 16)
+        self.assertEqual(self.c1.earnings, 0)
 
         # case 2: test if the stall doesn't have enough food left in stock
-
+        self.f2.validate_order(c2, s2, "Burger", 12)
+        self.assertEqual(self.c2.earnings, 0)
         # case 3: check if the cashier can order item from that stall
-        pass
-
+        self.f2.validate_order(c2, s7, "Taco", 12)
+        self.assertEqual(self.c2.earnings, 0)
     # Test if a customer can add money to their wallet
+
     def test_reload_money(self):
-        pass
+        self.f3.reload_money(20)
+        self.assertEqual(self.f3.wallet,120)
+        self.f3.reload_money(0)
+        self.assertEqual(self.f3.wallet,120)
+        self.f3.reload_money(100000)
+        self.assertEqual(self.f3.wallet,10120)
 
 # Write main function
 
@@ -247,7 +263,7 @@ def main():
 
     # case 4: the customer successfully places an order
 
-    pass
+    
 
 
 if __name__ == "__main__":
