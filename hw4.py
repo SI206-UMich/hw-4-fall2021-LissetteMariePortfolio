@@ -95,7 +95,8 @@ class Stall:
     def process_order(self, food_name, quantity):
         if has_item(name, quantity):
             self.inventory[food_name] -= quantity
-        order_cost = compute_cost(quantity)
+        print("Your order has been processed!")    
+        
         return order_cost
     # Adds a stall to the directory of the cashier.
 
@@ -235,6 +236,7 @@ def main():
     bakery_island = Stall("Bakery Island", seafood_dic, 1)
     don = Cashier("Don", [bakery_island])
     jean = Cashier("Jean", [some_crabs])
+    mary.validate_order(don, bakery_island, "Cookies and milk", 2)
     # Try all cases in the validate_order function
     # Below you need to have *each customer instance* try the four cases
     # case 1: the cashier does not have the stall
