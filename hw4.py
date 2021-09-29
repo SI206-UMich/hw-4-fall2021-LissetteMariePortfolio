@@ -252,11 +252,13 @@ def main():
     bakery_island = Stall("Bakery Island", seafood_dic, 1)
     don = Cashier("Don", [bakery_island])
     jean = Cashier("Jean", [some_crabs])
-    mary.validate_order(don, bakery_island, "Cookies and milk", 2)
+    
     # Try all cases in the validate_order function
     # Below you need to have *each customer instance* try the four cases
     # case 1: the cashier does not have the stall
-
+    mary.validate_order(don, some_crabs, "shrimp tacos", 4)
+    assertEqual(don.earnings,0)
+    
     # case 2: the casher has the stall, but not enough ordered food or the ordered food item
 
     # case 3: the customer does not have enough money to pay for the order:
