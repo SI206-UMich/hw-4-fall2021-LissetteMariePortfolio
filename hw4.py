@@ -229,11 +229,11 @@ class TestAllMethods(unittest.TestCase):
 
     def test_reload_money(self):
         self.f3.reload_money(20)
-        self.assertEqual(self.f3.wallet,120)
+        self.assertEqual(self.f3.wallet, 120)
         self.f3.reload_money(0)
-        self.assertEqual(self.f3.wallet,120)
+        self.assertEqual(self.f3.wallet, 120)
         self.f3.reload_money(100000)
-        self.assertEqual(self.f3.wallet,10120)
+        self.assertEqual(self.f3.wallet, 10120)
 
 # Write main function
 
@@ -249,23 +249,25 @@ def main():
     neyo = Customer("Neyo", 90)
     mandy = Customer("Mandy", 200)
     some_crabs = Stall("Some Crabs", seafood_dic, 9)
-    bakery_island = Stall("Bakery Island", seafood_dic, 1)
+    bakery_island = Stall("Bakery Island", bakery_menu, 1)
     don = Cashier("Don", [bakery_island])
     jean = Cashier("Jean", [some_crabs])
-    
+
     # Try all cases in the validate_order function
     # Below you need to have *each customer instance* try the four cases
     # case 1: the cashier does not have the stall
     mary.validate_order(don, some_crabs, "shrimp tacos", 4)
-    assertEqual(don.earnings,0)
-    
+    assertEqual(don.earnings, 0)
+
     # case 2: the casher has the stall, but not enough ordered food or the ordered food item
-
+    neyo.validate_order(don, bakery_island, "Strawberry Shortcake", 10)
+    assertEqual(don.earnings, 0)
     # case 3: the customer does not have enough money to pay for the order:
-
+    mary.validate_order(jean, some_crabs, "fish and chips", 37)
+    assertEqual(jean.earnings, 0)
     # case 4: the customer successfully places an order
-
-    
+    neyo.validate_order(jean, some_crabs, "fish and chips", 2)
+    assertEqual(jean.earnings, 18)
 
 
 if __name__ == "__main__":
