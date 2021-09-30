@@ -243,7 +243,7 @@ def main():
     seafood_dic = {"fish and chips": 37,
                    "Shrimp tacos": 6, "Seafood onigiri": 5}
     bakery_menu = {"Cookies and milk": 8,
-                   "Strawbery Shortcake": 9, "Lemon Square": 20}
+                   "Strawberry Shortcake": 9, "Lemon Square": 20}
     # Create different objects
     mary = Customer("Mary", 20)
     neyo = Customer("Neyo", 90)
@@ -257,17 +257,23 @@ def main():
     # Below you need to have *each customer instance* try the four cases
     # case 1: the cashier does not have the stall
     mary.validate_order(don, some_crabs, "shrimp tacos", 4)
-    assertEqual(don.earnings, 0)
+    print("Some Crabs' earnings should be zero,their actual earnings are: " +
+          str(some_crabs.earnings))
 
     # case 2: the casher has the stall, but not enough ordered food or the ordered food item
-    neyo.validate_order(don, bakery_island, "Strawberry Shortcake", 10)
-    assertEqual(don.earnings, 0)
+    neyo.validate_order(jean, some_crabs, "fish and chips", 10)
+    print("Some Crabs' earnings should be zero,their actual earnings are: " +
+          str(some_crabs.earnings))
+
     # case 3: the customer does not have enough money to pay for the order:
     mary.validate_order(jean, some_crabs, "fish and chips", 37)
-    assertEqual(jean.earnings, 0)
+    print("Some Crabs' earnings should be zero,their actual earnings are: " +
+          str(some_crabs.earnings))
+
     # case 4: the customer successfully places an order
     neyo.validate_order(jean, some_crabs, "fish and chips", 2)
-    assertEqual(jean.earnings, 18)
+    print("Some Crabs' earnings should be eighteen, their actual earnings are: " +
+          str(some_crabs.earnings))
 
 
 if __name__ == "__main__":
